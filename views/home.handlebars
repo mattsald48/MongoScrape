@@ -1,0 +1,19 @@
+<div id ="wrapper">
+<h1>Star Wars Collectibles Scrapper</h1>
+
+<div id="articles">
+<ul>
+  {{#each dbArticle}}
+  	<li data-id= "{{this._id}}">
+  	   <p>Article: {{this.title}}</p>
+       <p>Link: <a href="{{this.link}}">{{this.link}}</a></p>
+  	</li>
+  {{/each}}
+</ul>
+</div>
+
+<div id="notes"></div>
+
+
+<h4>Articles Property of Jedi Temple Archives http://www.jeditemplearchives.com</h4>
+</div>
