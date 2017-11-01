@@ -39,7 +39,8 @@ app.set("view engine", "handlebars");
 
 //connect to Mongo db database
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/mongoScrape",{useMongoClient: true});
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+mongoose.connect(MONGODB_URI, {useMongoClient: true});
 
 //Routes
 //app.get('/', (req, res) => res.render('home'));
