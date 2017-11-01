@@ -1,11 +1,11 @@
-// Whenever someone clicks a p tag
-$(document).on("click", "li", function() {
+
+$(document).on("click", "a#leavenote", function() {
   console.log('clicking this li');
-  // Empty the notes from the note section
+
   $("#notes").empty();
   // Save the id from the p tag
   var thisId = $(this).attr("data-id");
-
+  console.log("thisId: "+thisId);
   // Now make an ajax call for the Article
   $.ajax({
     method: "GET",
@@ -13,25 +13,29 @@ $(document).on("click", "li", function() {
   })
     // With that done, add the note information to the page
     .done(function(data) {
-      console.log(data);
+
       // The title of the article
-      $("#notes").append("<h2>" + data.title + "</h2>");
-      // An input to enter a new title
-      $("#notes").append("<input id='titleinput' name='title' >");
-      // A textarea to add a new note body
-      $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
-      // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      $("#notes").append(
+        
+        `<h2>${data.title}</h2>
+        <input id='titleinput' name='title'><br>
+        <textarea id='bodyinput' name='body'></textarea>
+        <a class="btn btn-danger" data-id='${data._id}' href="#" id='savenote'><i class="swg swg-reball swg-lg" aria-hidden="true"></i>Save Comment</a>`
+        );
 
       // If there's a note in the article
       if (data.note) {
-        // Place the title of the note in the title input
-        $("#titleinput").val(data.note.title);
-        // Place the body of the note in the body textarea
-        $("#bodyinput").val(data.note.body);
-      }
-    });
-});
+       for(var i = 0; i < data.note.length; i++) {
+        $("#notes").append(
+        `<div class="col-sm-6 col-md-6 col-lg-6" id="notes">
+           <br><h6>Title: ${data.note[i].title}</h6>
+           <h6>Body:</h6>
+           <p>${data.note[i].body}</p>
+        </div>`);
+       }//end of for loop
+      }//end of if
+    });//end of done
+});//end of .on
 
 // When you click the savenote button
 $(document).on("click", "#savenote", function() {
